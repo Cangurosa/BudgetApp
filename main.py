@@ -20,6 +20,13 @@ def main():
             budget.add_entry(obj, money, date)
             print(">Entry added!")
 
+        elif choice == '2':
+            print(budget.df)
+            res = int(input("What line you want to remove? "))
+            budget.df.drop(index=res, inplace=True)
+            print("Object removed!")
+
+
         elif choice == '3':
             res = input("Are you sure to delete all objects?[Y/N] ")
             if res == 'N' or res == 'n':
