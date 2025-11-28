@@ -4,30 +4,42 @@ def main():
     budget = BudgetManager()
     
     while True:
+        tot = budget.df['money'].sum()
+        spent = budget.df.loc[budget.df['money'] < 0, 'money'].sum()
+
         print("---BudgetManager---")
-        print("1]--> Add")
-        print("2]--> Remove")
-        print("3]--> Delete All")
-        print("4]--> View")
-        print("5]--> View All")
+        print("Total budget: ", tot, "| Spent: ", spent,)
+        print("1]--> Add expense")
+        print("2]--> Add profit")
+        print("3]--> Remove")
+        print("4]--> Delete All")
+        print("5]--> View")
+        print("6]--> View All")
         print("?]--> Exit")
         choice = input("Choose an option: ")
 
         if choice == '1':
             obj = input("Object: ")
-            money = input("Money: ")
+            money = float(input("Money: "))
             date = input("Date[YYYY-MM-DD]: ")
-            budget.add_entry(obj, money, date)
-            print(">Entry added!")
+            budget.add_entry(obj, -money, date)
+            print(">Expense added!")
 
         elif choice == '2':
+            obj = input("Object: ")
+            money = float(input("Money: "))
+            date = input("Date[YYYY-MM-DD]: ")
+            budget.add_entry(obj, +money, date)
+            print(">Profit added!")
+
+        elif choice == '3':
             print(budget.df)
             res = int(input("What line you want to remove? "))
             budget.df.drop(index=res, inplace=True)
             print("Object removed!")
 
 
-        elif choice == '3':
+        elif choice == '4':
             res = input("Are you sure to delete all objects?[Y/N] ")
             if res == 'N' or res == 'n':
                 continue
@@ -35,7 +47,7 @@ def main():
                 budget.delete_all()
                 print("All objects are done!")
 
-        elif choice == '4':
+        elif choice == '5':
             print("1. day")
             print("2. month")
             print("3. year")
@@ -65,7 +77,7 @@ def main():
                 else:
                     print(rows)
 
-        elif choice == '5':
+        elif choice == '6':
             print(budget.df)
         
         elif choice == '?':
